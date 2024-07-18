@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Description" content="Enter your description here" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+    <title>Gaming Website | Quiz Time</title>
+    <style>
+        .h {
+            height: 450px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-body h">
+                <h2 class="card-title text-center text-primary h1 fw-bold">Quiz Time</h2>
+                <div id="question-container">
+                    <h3 id="question" class="my-5"></h3>
+                    <div id="options" class="my-5"></div>
+                </div>
+                <p id="result" class="my-5"></p>
+            </div>
+        </div>
+        <div class="card-footer d-inline-block">
+            <button class="btn btn-primary" onclick="nextQuestion()">Next Question</button>
+        </div>
+    </div>
+
+    <script>
+        const quizQuestions = [
+            {
+                question: "What is the capital of France?",
+                options: ["Berlin", "Madrid", "Paris", "Lisbon"],
+                correct: 2
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Earth", "Mars", "Jupiter", "Saturn"],
+                correct: 1
+            },
+            {
+                question: "Who wrote 'To Kill a Mockingbird'?",
+                options: ["Harper Lee", "Mark Twain", "J.K. Rowling", "Ernest Hemingway"],
+                correct: 0
+            },
+            {
+                question: "What is the largest ocean on Earth?",
+                options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+                correct: 3
+            },
+            {
+                question: "What is the hardest natural substance on Earth?",
+                options: ["Gold", "Iron", "Diamond", "Platinum"],
+                correct: 2
+            },
+            {
+                question: "Who painted the Mona Lisa?",
+                options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"],
+                correct: 2
+            },
+            {
+                question: "What is the smallest country in the world?",
+                options: ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
+                correct: 1
+            },
+            {
+                question: "Who discovered penicillin?",
+                options: ["Marie Curie", "Alexander Fleming", "Louis Pasteur", "Gregor Mendel"],
+                correct: 1
+            },
+            {
+                question: "Which element has the chemical symbol 'O'?",
+                options: ["Osmium", "Oxygen", "Gold", "Silver"],
+                correct: 1
+            },
+            {
+                question: "What is the tallest mountain in the world?",
+                options: ["K2", "Kangchenjunga", "Mount Everest", "Lhotse"],
+                correct: 2
+            }
+        ];
+let currentQuestionIndex = 0;
+let score = 0;
+
+function displayQuestion() {
+const questionContainer = document.getElementById('question-container');
+const questionElement = document.getElementById('question');
+const optionsElement = document.getElementById('options');
+const resultElement = document.getElementById('result');
+
+  if (currentQuestionIndex < quizQuestions.length) {
+  const currentQuestion = quizQuestions[currentQuestionIndex];
+  questionElement.innerHTML = currentQuestion.question;
+  optionsElement.innerHTML = '';
+
+    currentQuestion.options.forEach((option, index) => {
+    const button = document.createElement('button');
+    button.classList.add('btn', 'btn-outline-primary', 'm-2');
+    button.innerHTML = option;
+    button.onclick = () => checkAnswer(index);
+    optionsElement.appendChild(button);
+    });
+
+      resultElement.innerHTML = '';
+            } else {
+      questionContainer.innerHTML = `<h3 class='text-success'>Quiz Completed! Your score: ${score}/${quizQuestions.length}</h3>`;
+            }
+        }
+
+        function checkAnswer(selectedIndex) {
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            const resultElement = document.getElementById('result');
+
+            if (selectedIndex === currentQuestion.correct) {
+                score++;
+                resultElement.innerHTML = `<p class='text-success'>Correct!</p>`;
+            } else {
+                resultElement.innerHTML = `<p class='text-danger'>Incorrect! The correct answer was: ${currentQuestion.options[currentQuestion.correct]}</p>`;
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+        window.onload = displayQuestion;
+    </script>
+</body>
+</html>
